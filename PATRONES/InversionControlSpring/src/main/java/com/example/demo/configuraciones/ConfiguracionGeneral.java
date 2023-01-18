@@ -23,9 +23,6 @@ public class ConfiguracionGeneral {
 		if(properties.getMotor().toUpperCase().equals("MYSQL")) {
 			return new MySqlConexion();	
 		}
-		return new SqlServerConexion();
-		
-		
-		
+		return new SqlServerConexion();		
 	}
 }
