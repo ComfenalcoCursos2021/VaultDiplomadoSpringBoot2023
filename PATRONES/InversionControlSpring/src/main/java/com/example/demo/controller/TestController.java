@@ -1,50 +1,66 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.conexiones.IConexion;
+import com.example.demo.dtos.UserDto;
 import com.example.demo.entidades.OtraInyectada;
+import com.example.demo.negocio.UserBl;
 import com.example.demo.propiedades.ConexionProperties;
 
 @Controller
-public class TestController {
-
-	
+public class TestController {	
 	
 	private OtraInyectada otraInyectada;
 	private ConexionProperties connProp;
-	private IConexion conexion;
+	private IConexion conexion;	
+	private UserBl userBl;
 	
-	public TestController(OtraInyectada otraInyectada,ConexionProperties connProp,IConexion conexion) {
+	public TestController(
+			OtraInyectada otraInyectada,
+			ConexionProperties connProp,
+			IConexion conexion,			
+			UserBl userBl) {
 		
 		this.otraInyectada = otraInyectada;
 		this.connProp = connProp;
-		this.conexion = conexion;
+		this.conexion = conexion;		
+		this.userBl = userBl;
 	}
 	
 	
 	@GetMapping("/user")
 	@ResponseBody
-	public ResponseEntity<String> getUsers(){
-		return new ResponseEntity<String>("Esta la lista de usuarios -> " + connProp.getMotor(),HttpStatus.OK);
+	public ResponseEntity<List<UserDto>> getUsers(){
+		
+		List<UserDto> usuarios = this.userBl.getUserList();
+		return new ResponseEntity<List<UserDto>>(usuarios,HttpStatus.OK);
 	}
 	@PostMapping("/user")
 	@ResponseBody
-	public ResponseEntity<String> saveUser(){
-		return new ResponseEntity<String>("Esta guardando =>Conexion=>" + conexion.getConexion(),HttpStatus.OK);
+	public ResponseEntity<UserDto> saveUser(@RequestBody UserDto usuario){		
+		return new ResponseEntity<UserDto>(this.userBl.guardar(usuario),HttpStatus.OK);
 	}
-	@DeleteMapping("/user")
+	
+	@DeleteMapping("/user/{id}")
 	@ResponseBody
-	public ResponseEntity<String> deleteUser(){
-		return new ResponseEntity<String>("Esta Borrando",HttpStatus.OK);
+	public ResponseEntity<Boolean> deleteUser(@PathVariable long id){
+		
+			return new ResponseEntity<Boolean>(this.userBl.borrar(id),HttpStatus.OK);	
+		
+		
 	}
 	@PutMapping("/user")
 	@ResponseBody

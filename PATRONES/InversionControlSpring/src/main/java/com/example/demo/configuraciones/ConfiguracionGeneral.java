@@ -1,6 +1,9 @@
 package com.example.demo.configuraciones;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,4 +28,15 @@ public class ConfiguracionGeneral {
 		}
 		return new SqlServerConexion();		
 	}
+	
+	@Bean
+	public DataSource dataSource() {
+		DataSourceBuilder data = DataSourceBuilder.create();
+		data.driverClassName("org.h2.Driver");
+		data.url("jdbc:h2:mem:testdb");
+		data.username("SA");
+		data.password("");		
+		return data.build();
+	}
+	
 }
