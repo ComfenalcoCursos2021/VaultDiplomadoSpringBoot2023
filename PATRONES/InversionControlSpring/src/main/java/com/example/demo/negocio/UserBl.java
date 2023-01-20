@@ -31,7 +31,7 @@ public class UserBl {
 	}
 	
 	public UserDto guardar(UserDto nuevoUsuario) {
-		UserEntity nuevo = new UserEntity();		
+		UserEntity nuevo = new UserEntity();		 
 		nuevo.setApellido(nuevoUsuario.getApellido());
 		nuevo.setNombre(nuevoUsuario.getNombre());
 		nuevo.setEmail(nuevoUsuario.getEmail());
