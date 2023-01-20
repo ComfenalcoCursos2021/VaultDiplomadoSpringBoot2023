@@ -2,6 +2,7 @@ package com.example.demo.configuraciones;
 
 import javax.sql.DataSource;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,11 @@ public class ConfiguracionGeneral {
 		data.username("SA");
 		data.password("");		
 		return data.build();
+	}
+	
+	@Bean
+	public ModelMapper getModel() {
+		return new ModelMapper();
 	}
 	
 }

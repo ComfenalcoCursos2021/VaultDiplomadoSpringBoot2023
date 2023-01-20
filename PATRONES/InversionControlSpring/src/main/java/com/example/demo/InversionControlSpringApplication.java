@@ -29,14 +29,24 @@ public class InversionControlSpringApplication implements CommandLineRunner {
 		
 		List<UserEntity> lista= new ArrayList<UserEntity>();
 		
-		for (int i = 1; i <= 2; i++) {
+		for (int i = 1; i <= 20; i++) {
 			UserEntity nuevo = new UserEntity("El nombre "+i+"", "El apellido "+i+"", "correo"+i+"@correo.com",i+10);
 			lista.add(nuevo);
 		}
 		
 		lista.stream().forEach(this.userRepositorio::save);
 		
+		List<UserEntity> lista2 = userRepositorio.findByEdad(11,15); 
 		
+		for (UserEntity userEntity : lista2) {
+			System.out.println(userEntity);
+		}
+		
+		lista2 = userRepositorio.findByNombre("El nombre 11"); 
+		
+		for (UserEntity userEntity : lista2) {
+			System.out.println(userEntity);
+		}
 		
 		System.out.println("termino la funcion run");
 		

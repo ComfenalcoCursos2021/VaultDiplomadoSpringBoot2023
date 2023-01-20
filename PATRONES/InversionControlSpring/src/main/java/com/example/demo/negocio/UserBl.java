@@ -1,9 +1,9 @@
 package com.example.demo.negocio;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dal.UserDal;
@@ -13,10 +13,13 @@ import com.example.demo.entities.UserEntity;
 @Service
 public class UserBl {
 
+	private ModelMapper mapper;
 	private UserDal userDal;
 
-	public UserBl(UserDal userDal) {
+	public UserBl(UserDal userDal,
+			ModelMapper mapper) {
 		this.userDal = userDal;
+		this.mapper = mapper;
 	}
 
 	public List<UserDto> getUserList() {
@@ -24,8 +27,8 @@ public class UserBl {
 		
 		List<UserEntity> entities = this.userDal.getList();
 		
-		for (UserEntity userEntity : entities) {
-			usersDto.add(new UserDto(userEntity));
+		for (UserEntity userEntity : entities) {			
+			usersDto.add(mapper.map(userEntity, UserDto.class));
 		}
 		return usersDto;
 	}
@@ -38,7 +41,7 @@ public class UserBl {
 		
 		UserEntity userEntity = this.userDal.guardar(nuevo);
 		
-		return new UserDto(userEntity);
+		return mapper.map(userEntity, UserDto.class);
 	}
 	
 	public boolean borrar(Long id) {
