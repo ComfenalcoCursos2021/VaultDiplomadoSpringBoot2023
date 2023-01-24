@@ -3,6 +3,7 @@ package com.example.demo.negocio;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,27 @@ public class UserBl {
 		return mapper.map(usuarios, new TypeToken<List<UserDto>>() {}.getType());		
 	}
 	
+	public UserDto actualizar(UserDto user, long idActualizar) {		
+		UserEntity useractualizado = this.userDal.actualizar(mapper.map(user, UserEntity.class), idActualizar);
+		return mapper.map(useractualizado, UserDto.class);
+	}
+	
+	public UserDto actualizar(UserDto user) {		
+		UserEntity useractualizado = this.userDal.actualizar(mapper.map(user, UserEntity.class));
+		return mapper.map(useractualizado, UserDto.class);
+	}
+	
+	
+	public boolean guardarBulk(List<UserDto> usuarios) {
+		try {
+			this.userDal.guardarBulk(mapper.map(usuarios, new TypeToken<List<UserEntity>>() {}.getType()));	
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+		return true;
+	}
 	
 }

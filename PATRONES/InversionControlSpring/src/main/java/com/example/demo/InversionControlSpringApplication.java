@@ -49,7 +49,7 @@ public class InversionControlSpringApplication implements CommandLineRunner {
 	private void ClasesAnteriores() {
 		List<UserEntity> lista= new ArrayList<UserEntity>();
 		
-		for (int i = 1; i <= 20; i++) {
+		for (int i = 1; i <= 1; i++) {
 			UserEntity nuevo = new UserEntity("El nombre "+i+"", "El apellido "+i+"", "correo"+i+"@correo.com",i+10);
 			lista.add(nuevo);
 		}

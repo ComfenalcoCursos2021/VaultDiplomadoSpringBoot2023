@@ -51,6 +51,13 @@ public class UserController {
 		return new ResponseEntity<UserDto>(this.userBl.guardar(usuario),HttpStatus.OK);
 	}
 	
+	@PostMapping("/bulk")
+	@ResponseBody
+	public ResponseEntity<String> saveUser(@RequestBody List<UserDto> usuarios){		
+		return new ResponseEntity<String>(String.valueOf(this.userBl.guardarBulk(usuarios)),HttpStatus.OK);
+	}
+	
+	
 	@DeleteMapping("/{id}")
 	@ResponseBody
 	public ResponseEntity<Boolean> deleteUser(@PathVariable long id){
@@ -59,9 +66,15 @@ public class UserController {
 		
 		
 	}
+	@PutMapping("/{id}")
+	@ResponseBody
+	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user, @PathVariable long id){
+		return new ResponseEntity<UserDto>(this.userBl.actualizar(user, id),HttpStatus.OK);
+	}
+	
 	@PutMapping
 	@ResponseBody
-	public ResponseEntity<String> updateUser(){
-		return new ResponseEntity<String>("Esta Actualizando",HttpStatus.OK);
+	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto user){
+		return new ResponseEntity<UserDto>(this.userBl.actualizar(user),HttpStatus.OK);
 	}
 }

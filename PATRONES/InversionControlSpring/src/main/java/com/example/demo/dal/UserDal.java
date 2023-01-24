@@ -3,6 +3,7 @@ package com.example.demo.dal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entities.UserEntity;
 import com.example.demo.repositorio.IUserRepositorio;
@@ -41,6 +42,39 @@ public class UserDal {
 	
 	public List<UserEntity> getListContains(String nombreLike){
 		return this.repo.findByNombreContainsOrderByEmailDesc(nombreLike);
+	}
+	
+	public UserEntity actualizar(UserEntity user, long idActualizar) {
+		
+		return this.repo.findById(idActualizar)
+				.map(u -> {
+					u.setApellido(user.getApellido());
+					u.setEdad(user.getEdad());
+					u.setNombre(user.getNombre());
+					u.setEmail(user.getEmail());
+					return this.repo.save(u);
+				}).get();
+	}
+	
+	public UserEntity upsert(UserEntity user) {
+		return this.repo.saveAndFlush(user);
+	} 
+	
+	public UserEntity actualizar(UserEntity user) {		
+		//return this.repo.saveAndFlush(user);		
+		return this.repo.findById(user.getId())
+				.map(u -> {
+					u.setApellido(user.getApellido());
+					u.setEdad(user.getEdad());
+					u.setNombre(user.getNombre());
+					u.setEmail(user.getEmail());
+					return this.repo.save(u);
+				}).get();
+	}
+	@Transactional
+	public void guardarBulk(List<UserEntity> usuariosNuevos) {
+		//usuariosNuevos.stream().forEach(u->u.setId(0L));
+		usuariosNuevos.stream().forEach(u -> this.repo.save(u));
 	}
 	
 }
