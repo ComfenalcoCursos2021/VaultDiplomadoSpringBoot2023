@@ -26,47 +26,20 @@ public class TestController {
 	private OtraInyectada otraInyectada;
 	private ConexionProperties connProp;
 	private IConexion conexion;	
-	private UserBl userBl;
+	
 	
 	public TestController(
 			OtraInyectada otraInyectada,
 			ConexionProperties connProp,
-			IConexion conexion,			
-			UserBl userBl) {
+			IConexion conexion) {
 		
 		this.otraInyectada = otraInyectada;
 		this.connProp = connProp;
 		this.conexion = conexion;		
-		this.userBl = userBl;
-	}
+		
+	}	
 	
 	
-	@GetMapping("/user")
-	@ResponseBody
-	public ResponseEntity<List<UserDto>> getUsers(){
-		
-		List<UserDto> usuarios = this.userBl.getUserList();
-		return new ResponseEntity<List<UserDto>>(usuarios,HttpStatus.OK);
-	}
-	@PostMapping("/user")
-	@ResponseBody
-	public ResponseEntity<UserDto> saveUser(@RequestBody UserDto usuario){		
-		return new ResponseEntity<UserDto>(this.userBl.guardar(usuario),HttpStatus.OK);
-	}
-	
-	@DeleteMapping("/user/{id}")
-	@ResponseBody
-	public ResponseEntity<Boolean> deleteUser(@PathVariable long id){
-		
-			return new ResponseEntity<Boolean>(this.userBl.borrar(id),HttpStatus.OK);	
-		
-		
-	}
-	@PutMapping("/user")
-	@ResponseBody
-	public ResponseEntity<String> updateUser(){
-		return new ResponseEntity<String>("Esta Actualizando",HttpStatus.OK);
-	}
 	
 	
 	

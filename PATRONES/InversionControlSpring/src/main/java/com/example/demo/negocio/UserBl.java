@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dal.UserDal;
@@ -47,4 +48,15 @@ public class UserBl {
 	public boolean borrar(Long id) {
 		return this.userDal.borrar(id);
 	}
+	
+	public List<UserDto> getListLike(String nombreLike){
+		List<UserEntity> usuarios = this.userDal.getListLike(nombreLike);		
+		return mapper.map(usuarios, new TypeToken<List<UserDto>>() {}.getType());		
+	}
+	public List<UserDto> getListContains(String nombreLike){
+		List<UserEntity> usuarios = this.userDal.getListContains(nombreLike);		
+		return mapper.map(usuarios, new TypeToken<List<UserDto>>() {}.getType());		
+	}
+	
+	
 }

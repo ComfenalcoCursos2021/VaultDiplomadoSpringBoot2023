@@ -27,6 +27,26 @@ public class InversionControlSpringApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		
 		
+		ClasesAnteriores();
+		buscarTesting();
+		System.out.println("termino la funcion run");
+		
+	}
+	private void buscarTesting() {
+		List<UserEntity> usuarios = userRepositorio.bucarNombreApellido("", "El apellido 11");		
+		usuarios.stream().forEach( user -> System.out.println("USUARIO BUSCADO TESTING  -> " + user));
+		
+		
+		usuarios = userRepositorio.findByNombreOrApellido("", "El apellido 11");		
+		usuarios.stream().forEach( user -> System.out.println("USUARIO BUSCADO QUERYMETHOD  -> " + user));
+		
+		
+		usuarios = userRepositorio.findByEdadBetween(18,22);		
+		usuarios.stream().forEach( user -> System.out.println("USUARIO BUSCADO QUERYMETHOD  -> " + user));
+	}
+	
+
+	private void ClasesAnteriores() {
 		List<UserEntity> lista= new ArrayList<UserEntity>();
 		
 		for (int i = 1; i <= 20; i++) {
@@ -47,9 +67,6 @@ public class InversionControlSpringApplication implements CommandLineRunner {
 		for (UserEntity userEntity : lista2) {
 			System.out.println(userEntity);
 		}
-		
-		System.out.println("termino la funcion run");
-		
 	}
 
 }

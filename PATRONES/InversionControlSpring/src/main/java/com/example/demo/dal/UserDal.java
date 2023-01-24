@@ -25,6 +25,7 @@ public class UserDal {
 		return this.repo.saveAndFlush(nuevoUsuario);
 	}
 	
+	
 	public boolean borrar(Long id) {
 		try {
 			this.repo.deleteById(id);
@@ -33,4 +34,13 @@ public class UserDal {
 		}
 		return true;
 	}
+	
+	public List<UserEntity> getListLike(String nombreLike){
+		return this.repo.findByNombreLikeOrderByIdDesc(nombreLike);
+	}
+	
+	public List<UserEntity> getListContains(String nombreLike){
+		return this.repo.findByNombreContainsOrderByEmailDesc(nombreLike);
+	}
+	
 }
