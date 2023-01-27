@@ -32,8 +32,9 @@ public class UnidadMedidaController {
 		return ResponseEntity.ok(unidadMedidaBl.findAll());
 	}
 	@GetMapping("/pages")
-	public ResponseEntity<List<UnidadMedidaDto>> findAll(@RequestParam(required = false) int page, 
-														@RequestParam int size){
+	public ResponseEntity<List<UnidadMedidaDto>> findAll(
+			@RequestParam(required = false) int page, 
+			@RequestParam int size){
 		///return new ResponseEntity<List<UnidadMedidaDto>>(unidadMedidaBl.findAll(), HttpStatus.OK);
 		return ResponseEntity.ok(unidadMedidaBl.findAll(page , size));
 	}	
