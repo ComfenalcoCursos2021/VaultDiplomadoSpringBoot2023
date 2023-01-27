@@ -2,3 +2,5 @@ INSERT INTO UNIDAD_MEDIDA (DESCRIPCION) VALUES ('Kilogramo'),('Gramos'),('Litros
 INSERT INTO CATEGORIAS (DESCRIPCION) VALUES ('Textiles'),('Electrodomesticos'),('Licores')
 
 
+INSERT INTO USUARIOS (NICKNAME,PASSWORD,NOMBRE) VALUES ('admin','$2a$10$lQ1Xr1dHU4HwK5aTWneykOwvGx98QAvtC6axCxy5nZvP9od6YwJBG','Administrador')
+
