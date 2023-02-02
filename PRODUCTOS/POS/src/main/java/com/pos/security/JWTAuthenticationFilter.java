@@ -50,7 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		response.addHeader("Authorization", "Bearer " + token);
 		response.setContentType("application/json");
-		response.getWriter().write("{'token':'Bearer "+token+"'}");
+		response.getWriter().write("{\"token\":\"Bearer "+token+"\"}");
 		response.getWriter().flush();
 		
 		super.successfulAuthentication(request, response, chain, authResult);

@@ -1,4 +1,4 @@
-package com.pos.entities;
+package com.eventcontrol.entity;
 
 import java.util.List;
 
@@ -15,15 +15,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "categorias")
+@Table(name="SALONES")
 @Data
 @AllArgsConstructor @NoArgsConstructor @Builder
-public class CategoriaEntity {
+public class SalonEntity {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id;	
+	private String nombre;
+	private int capacidad;
+	private String ubicacion;
 	private String descripcion;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "categoria")
-	private List<ProductoEntity> productos;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "salon")
+	private List<EventoEntity> eventos;
+	
+	
 }
