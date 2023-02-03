@@ -1,6 +1,7 @@
-package com.eventcontrol.entity;
+package com.audit.entities;
 
-import jakarta.persistence.Column;
+import org.springframework.stereotype.Service;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,15 +14,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="ASISTENTES")
+@Table(name="TRANSACTION_LOG")
 @Getter @Setter//@Data
 @AllArgsConstructor @NoArgsConstructor @Builder
-public class AsistenteEntity {
+public class TransactionLogEntities {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	private String nombre;
-	private String email;
-	@Column(unique = true)
-	private String numIdentificacion;
+	private String jsonText;
+	
+	
 }

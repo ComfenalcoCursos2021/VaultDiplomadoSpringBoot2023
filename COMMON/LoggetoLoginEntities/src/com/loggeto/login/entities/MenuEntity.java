@@ -1,10 +1,11 @@
-package com.eventcontrol.entity;
+package com.loggeto.login.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +14,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="ASISTENTES")
+@Table(name="MENUS")
 @Getter @Setter//@Data
 @AllArgsConstructor @NoArgsConstructor @Builder
-public class AsistenteEntity {
+public class MenuEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
-	private String nombre;
-	private String email;
-	@Column(unique = true)
-	private String numIdentificacion;
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name="id_menu_padre")
+	private MenuEntity menuPadre;
+	
+	private String url;
+	private String label;
+	private String icon;
+
 }

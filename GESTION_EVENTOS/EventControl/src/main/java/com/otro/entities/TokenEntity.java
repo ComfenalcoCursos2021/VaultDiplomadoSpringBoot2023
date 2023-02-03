@@ -1,4 +1,6 @@
-package com.eventcontrol.entity;
+package com.otro.entities;
+
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,15 +15,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="ASISTENTES")
+@Table(name="TOKEN_ENTITY")
 @Getter @Setter//@Data
 @AllArgsConstructor @NoArgsConstructor @Builder
-public class AsistenteEntity {
+public class TokenEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
 	private String nombre;
-	private String email;
-	@Column(unique = true)
-	private String numIdentificacion;
+	
 }
