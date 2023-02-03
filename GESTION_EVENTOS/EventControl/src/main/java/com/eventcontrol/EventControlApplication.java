@@ -16,7 +16,6 @@ import com.eventcontrol.repository.IEventoRepository;
 import com.eventcontrol.repository.ISalonRepository;
 
 @SpringBootApplication
-@ComponentScan
 @EntityScan(basePackages = {"com.otro.entities",
 		"com.eventcontrol.entity",
 		"com.audit.entities",
