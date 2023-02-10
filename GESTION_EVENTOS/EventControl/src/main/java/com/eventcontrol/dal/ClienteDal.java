@@ -39,7 +39,11 @@ public class ClienteDal {
 				}).get();
 	}
 	
-	public void delete(long id) {
+	public void delete(long id) throws Exception {
+		
+		if(!this.clienteRepository.existsById(id)) {
+			throw new Exception("El id ingresado no existe");
+		}
 		this.clienteRepository.deleteById(id);
 	}
 }

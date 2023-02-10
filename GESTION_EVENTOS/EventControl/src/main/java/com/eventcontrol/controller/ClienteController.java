@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eventcontrol.bl.ClienteBl;
 import com.eventcontrol.dtos.ClienteDto;
+import com.eventcontrol.globaldto.ResultadoDto;
 
 @RestController
 @RequestMapping("/cliente")
@@ -25,26 +26,26 @@ public class ClienteController {
 	
 	
 	@GetMapping
-	public ResponseEntity<List<ClienteDto>> findAll(){
-		return ResponseEntity.ok(this.clienteBl.findAll());
+	public ResultadoDto<List<ClienteDto>> findAll(){
+		return this.clienteBl.findAll();
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteDto> findById(@PathVariable long id){
-		return ResponseEntity.ok(this.clienteBl.findById(id));
+	public ResultadoDto<ClienteDto> findById(@PathVariable long id){
+		return this.clienteBl.findById(id);
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteDto> save(@RequestBody ClienteDto cliente){
-		return ResponseEntity.ok(this.clienteBl.save(cliente));
+	public ResultadoDto<ClienteDto> save(@RequestBody ClienteDto cliente){
+		return this.clienteBl.save(cliente);
 	}
 	@PutMapping
-	public ResponseEntity<ClienteDto> update(@RequestBody ClienteDto cliente){
-		return ResponseEntity.ok(this.clienteBl.update(cliente));
+	public ResultadoDto<ClienteDto> update(@RequestBody ClienteDto cliente){
+		return this.clienteBl.update(cliente);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity delete(@PathVariable long id){
-		this.clienteBl.delete(id);
-		return (ResponseEntity) ResponseEntity.ok();
+	public ResultadoDto delete(@PathVariable long id){
+		return this.clienteBl.delete(id);
+		
 	}
 }
