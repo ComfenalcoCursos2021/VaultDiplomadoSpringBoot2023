@@ -5,6 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -20,8 +22,12 @@ import com.eventcontrol.repository.ISalonRepository;
 		"com.eventcontrol.entity",
 		"com.audit.entities",
 		"com.loggeto.login.entities"})
-public class EventControlApplication implements CommandLineRunner {
+public class EventControlApplication extends SpringBootServletInitializer implements CommandLineRunner {
 
+	
+	
+	
+	
 	@Autowired
 	private IEventoRepository eventRepository;
 	@Autowired
@@ -30,6 +36,11 @@ public class EventControlApplication implements CommandLineRunner {
 	@Autowired
 	private ISalonRepository salonRepository;
 	
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(EventControlApplication.class);
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EventControlApplication.class, args);
@@ -76,7 +87,7 @@ public class EventControlApplication implements CommandLineRunner {
 		evento.setSalon(salon);
 		evento = this.eventRepository.save(evento);
 		
-		//evento = this.eventRepository.findById(evento.getId()).get();
+		evento = this.eventRepository.findById(evento.getId()).get();
 		
 		evento.getAsistentes().add(asistente);
 		evento.getAsistentes().add(asistente2);
