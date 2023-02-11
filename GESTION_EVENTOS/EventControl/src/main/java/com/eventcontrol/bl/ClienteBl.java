@@ -23,10 +23,10 @@ public class ClienteBl {
 	public ResultadoDto<List<ClienteDto>> findAll(){
 		try {
 			var result = this.clienteDal.findAll();
-			var todosLosDatos = mapper.map(result, new TypeToken<List<ClienteDto>>() {
+			List<ClienteDto> todosLosDatos = mapper.map(result, new TypeToken<List<ClienteDto>>() {
 			}.getType());			
 			
-			return ResultadoDto.ok(todosLosDatos);
+			return ResultadoDto.<List<ClienteDto>>ok(todosLosDatos);
 			
 		} catch (Exception e) {			
 			return ResultadoDto.Falla(e);
@@ -37,7 +37,7 @@ public class ClienteBl {
 		try {
 			var result = this.clienteDal.findById(id);
 			var resultado =  mapper.map(result, ClienteDto.class);
-			return ResultadoDto.ok(resultado);
+			return ResultadoDto.<ClienteDto>ok(resultado);
 			
 		} catch (Exception e) {
 			return ResultadoDto.Falla(e);
@@ -68,7 +68,7 @@ public class ClienteBl {
 		
 	}
 	
-	public ResultadoDto delete(long id) {
+	public ResultadoDto<String> delete(long id) {
 		try {
 			this.clienteDal.delete(id);
 			return ResultadoDto.ok(null);

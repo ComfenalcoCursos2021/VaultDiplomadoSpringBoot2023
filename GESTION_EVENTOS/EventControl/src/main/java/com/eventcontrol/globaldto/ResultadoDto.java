@@ -13,15 +13,15 @@ public class ResultadoDto<T> {
 	private T data;
 	private String errorMessage;
 	
-	public static <T> ResultadoDto ok(T data) {
-		return ResultadoDto.builder().data(data).todoOk(true).build();
+	public static <T> ResultadoDto<T> ok(T data) {
+		return ResultadoDto.<T>builder().data(data).todoOk(true).build();
 	}
-	public static <T> ResultadoDto Falla() {
-		return ResultadoDto.builder().todoOk(false).build();
+	public static <T> ResultadoDto<T> Falla() {
+		return ResultadoDto.<T>builder().todoOk(false).build();
 	}
-	public static <T> ResultadoDto Falla(Exception e) {
+	public static <T> ResultadoDto<T> Falla(Exception e) {
 		
-		return ResultadoDto.builder().todoOk(false).errorMessage(e.getMessage()).build();
+		return ResultadoDto.<T>builder().todoOk(false).errorMessage(e.getMessage()).build();
 	}
 	
 }
