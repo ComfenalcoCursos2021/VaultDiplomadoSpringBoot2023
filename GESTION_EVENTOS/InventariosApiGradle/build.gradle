@@ -33,6 +33,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'	
 	implementation name: 'LoggetoLoginEntities-0.0.3', ext: 'jar'
 	//providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat:'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config:4.0.1'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:4.0.1'
+	
 }
 
 tasks.named('test') {
