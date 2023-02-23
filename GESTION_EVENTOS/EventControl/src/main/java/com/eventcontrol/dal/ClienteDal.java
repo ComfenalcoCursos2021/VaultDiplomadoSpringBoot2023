@@ -29,7 +29,7 @@ public class ClienteDal {
 		/*if(!this.clienteRepository.existsById(entity.getId())) {
 			throw new Exception("No se encuentra");
 		}*/
-		
+		 
 		return this.clienteRepository.findById(entity.getId())
 				.map( x -> {
 					x.setEmail(entity.getEmail());

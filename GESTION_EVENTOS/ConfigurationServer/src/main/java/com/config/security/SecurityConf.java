@@ -30,6 +30,7 @@ public class SecurityConf {
 				.and()
 				.build();
 	}
+	
 	@Bean
 	AuthenticationManager authManager(HttpSecurity http) throws Exception {
 		return http.getSharedObject(AuthenticationManagerBuilder.class)

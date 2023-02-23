@@ -23,7 +23,8 @@ public class ClienteBl {
 	public ResultadoDto<List<ClienteDto>> findAll(){
 		try {
 			var result = this.clienteDal.findAll();
-			List<ClienteDto> todosLosDatos = mapper.map(result, new TypeToken<List<ClienteDto>>() {
+			List<ClienteDto> todosLosDatos = mapper.map(result, 
+					new TypeToken<List<ClienteDto>>() {
 			}.getType());			
 			
 			return ResultadoDto.<List<ClienteDto>>ok(todosLosDatos);

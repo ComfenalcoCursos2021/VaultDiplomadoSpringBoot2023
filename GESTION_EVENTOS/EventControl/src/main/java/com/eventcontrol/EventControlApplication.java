@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import com.eventcontrol.entity.AsistenteEntity;
 import com.eventcontrol.entity.EventoEntity;
@@ -16,6 +17,7 @@ import com.eventcontrol.repository.IEventoRepository;
 import com.eventcontrol.repository.ISalonRepository;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @EntityScan(basePackages = {"com.otro.entities",
 		"com.eventcontrol.entity",
 		"com.audit.entities",
@@ -34,7 +36,8 @@ public class EventControlApplication extends SpringBootServletInitializer implem
 	@Autowired
 	private ISalonRepository salonRepository;
 	
-
+	
+	
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(EventControlApplication.class);
@@ -47,6 +50,10 @@ public class EventControlApplication extends SpringBootServletInitializer implem
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		
+		
+		
+		
 		//initDb();
 		/*var a = this.salonRepository.findById(1L).get();
 		//var a = this.eventRepository.findById(1L).get(); 
