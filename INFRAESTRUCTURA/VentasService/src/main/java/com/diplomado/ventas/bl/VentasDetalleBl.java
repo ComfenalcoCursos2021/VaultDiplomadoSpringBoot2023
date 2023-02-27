@@ -2,16 +2,19 @@
 package com.diplomado.ventas.bl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.diplomado.ventas.client.ProductosClient;
 import com.diplomado.ventas.dal.VentasDetalleDal;
 import com.diplomado.ventas.dtos.VentasDetalleDto;
 import com.diplomado.ventas.entity.VentasDetalleEntity;
 import com.diplomado.ventas.globaldto.ResultadoDto;
+import com.diplomado.ventas.model.ProductoModel;
 
 @Service
 public class VentasDetalleBl {
@@ -21,12 +24,19 @@ public class VentasDetalleBl {
 	@Autowired
 	private ModelMapper mapper;
 	
+	@Autowired
+	private ProductosClient productosClient;
+	
 	public ResultadoDto<List<VentasDetalleDto>> findAll(){
 		try {
 			var result = this.ventasdetalleDal.findAll();
 			List<VentasDetalleDto> todosLosDatos = mapper.map(result, new TypeToken<List<VentasDetalleDto>>() {
 			}.getType());			
-			
+			todosLosDatos = todosLosDatos.stream().map(x ->  {
+				ProductoModel producto = this.productosClient.findByIdClient(x.getProductosId());
+				x.setProducto(producto);
+				return x;
+				}).collect(Collectors.toList());
 			return ResultadoDto.<List<VentasDetalleDto>>ok(todosLosDatos);
 			
 		} catch (Exception e) {			
@@ -34,10 +44,29 @@ public class VentasDetalleBl {
 		}
 		
 	}
+	public ResultadoDto<List<VentasDetalleDto>> findByVentasId(long id){
+		try {
+			var result = this.ventasdetalleDal.findByVentasId(id);
+			List<VentasDetalleDto> todosLosDatos = mapper.map(result, new TypeToken<List<VentasDetalleDto>>() {
+			}.getType());			
+			todosLosDatos = todosLosDatos.stream().map(x ->  {
+				ProductoModel producto = this.productosClient.findByIdClient(x.getProductosId());
+				x.setProducto(producto);
+				return x;
+				}).collect(Collectors.toList());
+			return ResultadoDto.<List<VentasDetalleDto>>ok(todosLosDatos);
+			
+		} catch (Exception e) {			
+			return ResultadoDto.Falla(e);
+		}
+		
+	}
+	
 	public ResultadoDto<VentasDetalleDto> findById(long id){
 		try {
 			var result = this.ventasdetalleDal.findById(id);
 			VentasDetalleDto resultado =  mapper.map(result, VentasDetalleDto.class);
+			resultado.setProducto(this.productosClient.findByIdClient(resultado.getProductosId()));
 			return ResultadoDto.<VentasDetalleDto>ok(resultado);
 			
 		} catch (Exception e) {
@@ -45,6 +74,8 @@ public class VentasDetalleBl {
 		}
 				
 	}
+	
+	
 	
 	public ResultadoDto<VentasDetalleDto> save(VentasDetalleDto newVentasDetalle) {
 		

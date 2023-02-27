@@ -29,17 +29,18 @@ public class VentasDetalleController {
 	@Autowired
 	private VentasDetalleBl ventasdetalleBl;
 	
-	@Autowired
-	private ProductosClient productosClient;
+	
 	
 	@GetMapping
 	public ResultadoDto<List<VentasDetalleDto>> findAll(){
 		return this.ventasdetalleBl.findAll();
 	}
+	@GetMapping("/byVenta/{idventa}")
+	public ResultadoDto<List<VentasDetalleDto>> findByVentasId(@PathVariable long idventa){
+		return this.ventasdetalleBl.findByVentasId(idventa);
+	}
 	@GetMapping("/{id}")
-	public ResultadoDto<VentasDetalleDto> findById(@PathVariable long id){
-		ProductoModel producto1 = productosClient.findByIdClient(1);
-		ResultadoDto<ProductoModel> producto11 = productosClient.findById(1);
+	public ResultadoDto<VentasDetalleDto> findById(@PathVariable long id){		
 		return this.ventasdetalleBl.findById(id);
 	}
 	

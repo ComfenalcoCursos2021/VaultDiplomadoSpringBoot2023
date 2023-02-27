@@ -2,6 +2,8 @@
 
 package com.diplomado.ventas.dtos;
 
+import com.diplomado.ventas.model.ProductoModel;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,11 +17,10 @@ import lombok.Setter;
 public class VentasDetalleDto {
 
 		
-		private int id;
-		
-		private int productosId;	
-		
-		private int ventasId;	
+		private int id;		
+		private int productosId;		
+		private int ventasId;			
+		private ProductoModel producto;
 	
 }
 

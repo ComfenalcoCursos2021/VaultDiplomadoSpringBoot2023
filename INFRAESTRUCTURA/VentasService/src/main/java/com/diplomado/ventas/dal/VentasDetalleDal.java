@@ -23,7 +23,9 @@ public class VentasDetalleDal {
 	public VentasDetalleEntity findById(long id) {
 		return this.ventasdetalleRepository.findById(id).get();
 	}
-
+	public List<VentasDetalleEntity> findByVentasId(long id) {
+		return this.ventasdetalleRepository.findByVentasId(id);
+	}
 	public VentasDetalleEntity save(VentasDetalleEntity entity) {
 		return this.ventasdetalleRepository.save(entity);
 	}
