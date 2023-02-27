@@ -7,9 +7,10 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 
-import com.diplomado.ventas.client.ProductosClient;
+import com.diplomado.ventas.client.ProductosService;
 import com.diplomado.ventas.dal.VentasDetalleDal;
 import com.diplomado.ventas.dtos.VentasDetalleDto;
 import com.diplomado.ventas.entity.VentasDetalleEntity;
@@ -25,15 +26,24 @@ public class VentasDetalleBl {
 	private ModelMapper mapper;
 	
 	@Autowired
-	private ProductosClient productosClient;
+	private ProductosService productosService;
 	
+	@Autowired
+	private CircuitBreakerFactory circuitBreakerFactory;
+		
 	public ResultadoDto<List<VentasDetalleDto>> findAll(){
 		try {
 			var result = this.ventasdetalleDal.findAll();
 			List<VentasDetalleDto> todosLosDatos = mapper.map(result, new TypeToken<List<VentasDetalleDto>>() {
 			}.getType());			
 			todosLosDatos = todosLosDatos.stream().map(x ->  {
-				ProductoModel producto = this.productosClient.findByIdClient(x.getProductosId());
+				
+				ProductoModel producto=circuitBreakerFactory.create("getProductoById").run(
+						()->this.productosService.getProductoById(x.getProductosId()),
+						throwable -> handleException());
+				//ProductoModel producto = this.productosService.getProductoById(x.getProductosId());
+				
+				
 				x.setProducto(producto);
 				return x;
 				}).collect(Collectors.toList());
@@ -44,29 +54,41 @@ public class VentasDetalleBl {
 		}
 		
 	}
+	private ProductoModel handleException() {
+	    ProductoModel returnValue = new ProductoModel();
+	    returnValue.setNombre("VACIO");
+	    return returnValue;
+	}
+	
+	
 	public ResultadoDto<List<VentasDetalleDto>> findByVentasId(long id){
-		try {
+		//try {
 			var result = this.ventasdetalleDal.findByVentasId(id);
 			List<VentasDetalleDto> todosLosDatos = mapper.map(result, new TypeToken<List<VentasDetalleDto>>() {
 			}.getType());			
 			todosLosDatos = todosLosDatos.stream().map(x ->  {
-				ProductoModel producto = this.productosClient.findByIdClient(x.getProductosId());
+				
+				ProductoModel producto=circuitBreakerFactory.create("getProductoById").run(
+						()->this.productosService.getProductoById(x.getProductosId()),
+						throwable -> handleException());
+				
 				x.setProducto(producto);
 				return x;
 				}).collect(Collectors.toList());
 			return ResultadoDto.<List<VentasDetalleDto>>ok(todosLosDatos);
 			
-		} catch (Exception e) {			
+		/*} catch (Exception e) {			
 			return ResultadoDto.Falla(e);
-		}
-		
+		}	*/	
 	}
+	
+	
 	
 	public ResultadoDto<VentasDetalleDto> findById(long id){
 		try {
 			var result = this.ventasdetalleDal.findById(id);
 			VentasDetalleDto resultado =  mapper.map(result, VentasDetalleDto.class);
-			resultado.setProducto(this.productosClient.findByIdClient(resultado.getProductosId()));
+			resultado.setProducto(this.productosService.getProductoById(resultado.getProductosId()));
 			return ResultadoDto.<VentasDetalleDto>ok(resultado);
 			
 		} catch (Exception e) {

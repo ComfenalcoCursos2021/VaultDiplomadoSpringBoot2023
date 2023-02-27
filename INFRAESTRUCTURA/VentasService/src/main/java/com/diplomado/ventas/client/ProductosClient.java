@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.diplomado.ventas.globaldto.ResultadoDto;
 import com.diplomado.ventas.model.ProductoModel;
 
-@FeignClient(name="bodegas-service", path="/productos")
+@FeignClient("bodegas-service")
 public interface ProductosClient {
 
-	@GetMapping("/client/{id}")
+	@GetMapping("/productos/client/{id}")
 	public ProductoModel findByIdClient(@PathVariable long id);
-	@GetMapping("/{id}")
+	@GetMapping("/productos/{id}")
 	public ResultadoDto<ProductoModel> findById(@PathVariable long id);
 }
