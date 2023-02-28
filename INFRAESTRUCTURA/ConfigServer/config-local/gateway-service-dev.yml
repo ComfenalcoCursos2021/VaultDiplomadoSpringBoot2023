@@ -1,0 +1,35 @@
+server:
+  port: 8080
+eureka:
+  client: 
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka    
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+  registry-fetch-interval-seconds: 5
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+       locator:
+         enabled: true
+         lower-case-service-id: 'true'
+      routes:
+      - id: bodegasService
+        uri: lb://BODEGAS-SERVICE
+        predicates:
+        - Path=/productos/**
+      - id: ventasService
+        uri: lb://VENTAS-SERVICE
+        predicates:
+        - Path=/ventasdetalle/**
+      
+
+
+
+
+
+

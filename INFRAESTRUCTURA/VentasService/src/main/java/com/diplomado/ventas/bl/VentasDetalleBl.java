@@ -28,22 +28,15 @@ public class VentasDetalleBl {
 	@Autowired
 	private ProductosService productosService;
 	
-	@Autowired
-	private CircuitBreakerFactory circuitBreakerFactory;
+	
 		
 	public ResultadoDto<List<VentasDetalleDto>> findAll(){
 		try {
 			var result = this.ventasdetalleDal.findAll();
 			List<VentasDetalleDto> todosLosDatos = mapper.map(result, new TypeToken<List<VentasDetalleDto>>() {
 			}.getType());			
-			todosLosDatos = todosLosDatos.stream().map(x ->  {
-				
-				ProductoModel producto=circuitBreakerFactory.create("getProductoById").run(
-						()->this.productosService.getProductoById(x.getProductosId()),
-						throwable -> handleException());
-				//ProductoModel producto = this.productosService.getProductoById(x.getProductosId());
-				
-				
+			todosLosDatos = todosLosDatos.stream().map(x ->  {				
+				ProductoModel producto = this.productosService.getProductoById(x.getProductosId());				
 				x.setProducto(producto);
 				return x;
 				}).collect(Collectors.toList());
@@ -54,32 +47,25 @@ public class VentasDetalleBl {
 		}
 		
 	}
-	private ProductoModel handleException() {
-	    ProductoModel returnValue = new ProductoModel();
-	    returnValue.setNombre("VACIO");
-	    return returnValue;
-	}
 	
 	
 	public ResultadoDto<List<VentasDetalleDto>> findByVentasId(long id){
-		//try {
+		try {
 			var result = this.ventasdetalleDal.findByVentasId(id);
 			List<VentasDetalleDto> todosLosDatos = mapper.map(result, new TypeToken<List<VentasDetalleDto>>() {
 			}.getType());			
 			todosLosDatos = todosLosDatos.stream().map(x ->  {
 				
-				ProductoModel producto=circuitBreakerFactory.create("getProductoById").run(
-						()->this.productosService.getProductoById(x.getProductosId()),
-						throwable -> handleException());
+				ProductoModel producto = this.productosService.getProductoById(x.getProductosId());
 				
 				x.setProducto(producto);
 				return x;
 				}).collect(Collectors.toList());
 			return ResultadoDto.<List<VentasDetalleDto>>ok(todosLosDatos);
 			
-		/*} catch (Exception e) {			
+		} catch (Exception e) {			
 			return ResultadoDto.Falla(e);
-		}	*/	
+		}		
 	}
 	
 	

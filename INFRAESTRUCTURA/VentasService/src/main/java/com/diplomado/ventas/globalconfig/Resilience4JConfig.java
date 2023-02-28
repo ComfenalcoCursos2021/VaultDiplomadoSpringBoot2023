@@ -20,7 +20,8 @@ public class Resilience4JConfig {
 				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(3)).build())
 				.circuitBreakerConfig(CircuitBreakerConfig.custom().slidingWindowSize(18)
 						.slidingWindowType(CircuitBreakerConfig.SlidingWindowType.TIME_BASED)
-						.minimumNumberOfCalls(5).failureRateThreshold(25).build())
+						.minimumNumberOfCalls(5).
+						failureRateThreshold(25).build())
 				.build());
 	}
 }
