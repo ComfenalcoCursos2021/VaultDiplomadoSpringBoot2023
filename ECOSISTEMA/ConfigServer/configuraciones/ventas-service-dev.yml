@@ -8,10 +8,29 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
+  boot:
+    admin:
+      client:
+        url: http://localhost:7777
 server:
-  port: 8088
+  port: 8089
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:9999/eureka
+      
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    jmx:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      enabled: true
+
+  
+      

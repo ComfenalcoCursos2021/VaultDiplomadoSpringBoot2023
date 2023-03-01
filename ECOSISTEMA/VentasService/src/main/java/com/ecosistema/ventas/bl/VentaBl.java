@@ -1,11 +1,13 @@
 package com.ecosistema.ventas.bl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ecosistema.ventas.clients.ProductoClientService;
 import com.ecosistema.ventas.dal.VentaDal;
 import com.ecosistema.ventas.dto.VentaDto;
 import com.ecosistema.ventas.entity.VentaEntity;
@@ -15,6 +17,8 @@ import com.google.common.reflect.TypeToken;
 @Service
 public class VentaBl {
 
+	@Autowired
+	private ProductoClientService productoService;
 	@Autowired
 	private VentaDal ventaDal;
 	@Autowired
@@ -27,6 +31,12 @@ public class VentaBl {
 					new TypeToken<List<VentaDto>>() {
 			}.getType());			
 			
+			todosLosDatos = todosLosDatos.stream().map(x -> {
+				var producto = productoService.getProducto(x.getIdProducto());
+				x.setProducto(producto);
+				return x;
+			}).collect(Collectors.toList());
+			
 			return ResultadoDto.<List<VentaDto>>ok(todosLosDatos);
 			
 		} catch (Exception e) {			
@@ -38,6 +48,9 @@ public class VentaBl {
 		try {
 			var result = this.ventaDal.findById(id);
 			var resultado =  mapper.map(result, VentaDto.class);
+			var producto = productoService.getProducto(resultado.getIdProducto());
+			resultado.setProducto(producto);
+			
 			return ResultadoDto.<VentaDto>ok(resultado);
 			
 		} catch (Exception e) {

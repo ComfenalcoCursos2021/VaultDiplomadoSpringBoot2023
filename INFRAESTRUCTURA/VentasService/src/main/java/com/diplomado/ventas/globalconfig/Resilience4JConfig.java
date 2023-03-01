@@ -17,11 +17,13 @@ public class Resilience4JConfig {
 	@Bean
 	public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
 		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
-				.timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(3)).build())
-				.circuitBreakerConfig(CircuitBreakerConfig.custom().slidingWindowSize(18)
-						.slidingWindowType(CircuitBreakerConfig.SlidingWindowType.TIME_BASED)
-						.minimumNumberOfCalls(5).
-						failureRateThreshold(25).build())
+				.timeLimiterConfig(TimeLimiterConfig.custom()
+				.timeoutDuration(Duration.ofSeconds(3)).build())
+				.circuitBreakerConfig(CircuitBreakerConfig.custom()
+						.slidingWindowSize(18)
+						.slidingWindowType(CircuitBreakerConfig.SlidingWindowType.COUNT_BASED)
+						.minimumNumberOfCalls(5)
+				.failureRateThreshold(25).build())
 				.build());
 	}
 }

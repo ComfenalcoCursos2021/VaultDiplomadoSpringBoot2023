@@ -8,6 +8,7 @@
 		<version>3.0.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	<packaging>jar</packaging>
 	<groupId>com.ecosistema</groupId>
 	<artifactId>ProductosService</artifactId>
 	<version>0.0.1</version>
@@ -78,6 +79,17 @@
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>3.1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-client -->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
