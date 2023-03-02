@@ -12,10 +12,18 @@ spring:
         uri: lb://PRODUCTOS-SERVICE
         predicates:
         - Path=/productos/**
+        filters:
+        - AuthFilter
       - id: ventas
         uri: lb://VENTAS-SERVICE
         predicates:
         - Path=/ventas/**
+        filters:
+        - AuthFilter
+      - id: login
+        uri: lb://LOGIN-SERVICE
+        predicates:
+        - Path=/login/loggeo,/login/validateToken
 
 eureka:
   instance:
