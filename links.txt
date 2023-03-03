@@ -1,3 +1,8 @@
 
 Guia practica de crear certificados
 https://help.hcltechsw.com/safelinx/1.2/adminguide/creating_a_self-signed_certificate.html
+
+
+
+Patrones de diseño
+https://www.youtube.com/watch?v=gocJeOHtj9w&list=PLvimn1Ins-41Uiugt1WbpyFo1XT1WOquL&index=3&ab_channel=MitoCode
