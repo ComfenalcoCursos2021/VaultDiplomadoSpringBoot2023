@@ -1,0 +1,3 @@
+
+Guia practica de crear certificados
+https://help.hcltechsw.com/safelinx/1.2/adminguide/creating_a_self-signed_certificate.html
